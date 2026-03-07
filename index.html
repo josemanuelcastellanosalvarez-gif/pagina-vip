@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rincón VIP 💖</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Acceso VIP -->
+  <div id="login">
+    <h2>Acceso VIP 💌</h2>
+    <input type="password" id="password" placeholder="Ingrese contraseña">
+    <button onclick="checkPassword()">Entrar</button>
+  </div>
+
+  <!-- Contenido VIP -->
+  <div id="vipContent" style="display:none;">
+    <h1>Bienvenido a tu rincón especial 💖</h1>
+
+    <!-- Toca discos y nombre canción -->
+    <div id="playerContainer">
+      <img src="images/disc.png" id="disc" alt="tocadiscos">
+      <div id="songName"></div>
+    </div>
+
+    <!-- Música -->
+    <audio id="bgMusic" autoplay></audio>
+    <button onclick="toggleMusic()">🎵 Música</button>
+
+    <!-- Contador -->
+    <div id="contador"></div>
+
+    <!-- Actividades -->
+    <div class="activities">
+      <button onclick="alert('🎲 Mini juego: Adivina mi mensaje secreto!')">Mini juego</button>
+      <button onclick="alert('💌 Escribe un mensaje para nuestro próximo encuentro')">Actividad romántica</button>
+      <button onclick="alert('💬 Trivia romántica')">Trivia</button>
+      <button onclick="alert('🌹 Elige tu cita favorita')">Elegir cita</button>
+      <button onclick="alert('🎨 Dibuja algo para mi ❤️')">Actividad creativa</button>
+    </div>
+
+    <!-- Notas -->
+    <div id="noteBox"></div>
+
+    <!-- Subida de imágenes -->
+    <div id="imageContainer">
+      <h3>Sube tu foto favorita 💖</h3>
+      <input type="file" id="imageUpload" accept="image/*">
+      <div id="displayImages"></div>
+    </div>
+
+    <!-- Mini chat -->
+    <div id="chatContainer">
+      <h3>Mensajes VIP 💌</h3>
+      <div id="chatBox"></div>
+      <input type="text" id="chatInput" placeholder="Escribe tu mensaje...">
+      <button onclick="sendMessage()">Enviar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

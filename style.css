@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #ffe6f0, #fff0f5);
+  overflow-x: hidden;
+}
+
+#login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+#login input { padding: 10px; font-size: 16px; margin: 10px; border-radius: 5px; border: 1px solid #ccc; }
+#login button { padding: 10px 20px; font-size: 16px; border-radius: 5px; border: none; background-color: #ff66a3; color: white; cursor: pointer; transition:0.3s; }
+#login button:hover { background-color: #ff3385; }
+
+#vipContent { padding: 20px; text-align: center; }
+
+#playerContainer { display:flex; align-items:center; justify-content:center; margin: 20px; }
+#disc { width:50px; height:50px; margin-right:15px; animation: spin 5s linear infinite; }
+#songName { font-size:18px; color:#ff3385; }
+
+@keyframes spin {
+  from {transform: rotate(0deg);}
+  to {transform: rotate(360deg);}
+}
+
+.activities button { margin: 10px; padding: 10px 20px; font-size: 16px; border-radius: 5px; border: none; background-color: #ff99c8; color: white; cursor: pointer; transition:0.3s; }
+.activities button:hover { background-color: #ff66a3; }
+
+#contador { margin: 20px 0; font-size: 22px; color:#ff3385; }
+#noteBox { margin-top: 20px; font-size: 20px; color:#ff3385; min-height: 30px; }
+
+.emoji { position: absolute; pointer-events: none; user-select: none; text-shadow: 0 0 8px rgba(255,0,150,0.7); }
+
+#imageContainer { margin: 20px 0; text-align: center; }
+#displayImages img { max-width: 150px; margin: 10px; border-radius: 10px; border: 2px solid #ff99c8; box-shadow: 0 0 10px rgba(255,153,200,0.5); }
+
+#chatContainer { margin-top: 20px; text-align: center; }
+#chatBox { height: 150px; overflow-y: auto; border: 2px solid #ff99c8; border-radius: 10px; padding: 10px; background: #fff0f5; margin-bottom: 10px; }
+#chatInput { padding: 8px; width: 60%; border-radius: 5px; border: 1px solid #ccc; }
+#chatContainer button { padding: 8px 15px; border-radius: 5px; border: none; background-color: #ff66a3; color: white; cursor: pointer; transition:0.3s; }
+#chatContainer button:hover { background-color: #ff3385; }
