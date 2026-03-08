@@ -1,82 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Rincón VIP 💖</title>
 
-<style>
+<link rel="stylesheet" href="style.css">
 
-body{
-font-family: Arial, sans-serif;
-text-align:center;
-color:white;
-margin:0;
-height:100vh;
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
 
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-
-transition: background-image 2s ease-in-out;
-}
-
-#login{
-margin-top:120px;
-}
-
-input{
-padding:10px;
-font-size:16px;
-border-radius:5px;
-border:none;
-}
-
-button{
-padding:10px 20px;
-font-size:16px;
-cursor:pointer;
-margin:10px;
-border:none;
-border-radius:8px;
-background:#ff4d88;
-color:white;
-}
-
-button:hover{
-background:#ff1f6a;
-}
-
-#vipContent{
-display:none;
-margin-top:40px;
-}
-
-#disc{
-width:150px;
-margin:20px;
-}
-
-.activities{
-margin-top:20px;
-}
-
-</style>
 </head>
 
 <body>
 
 <div id="login">
-
 <h2>Acceso VIP 💌</h2>
-
 <input type="password" id="password" placeholder="Ingrese contraseña">
-
-<br><br>
-
 <button onclick="checkPassword()">Entrar</button>
-
 </div>
 
 
@@ -84,88 +26,86 @@ margin-top:20px;
 
 <h1>Bienvenido a tu rincón especial 💖</h1>
 
+<div id="contador"></div>
+
+<div id="noteBox"></div>
+
+
+<div id="playerContainer">
+
 <img src="images/disc.png" id="disc">
 
-<h3>🎵 Música</h3>
+<div>
 
-<audio controls>
+<p id="songName"></p>
 
-<source src="musica/romance1.mp3" type="audio/mpeg">
-<source src="musica/romance2.mp3" type="audio/mpeg">
-<source src="musica/romance3.mp3" type="audio/mpeg">
-<source src="musica/romance4.mp3" type="audio/mpeg">
-<source src="musica/romance5.mp3" type="audio/mpeg">
+<audio id="bgMusic"></audio>
 
-</audio>
+<button onclick="toggleMusic()">▶️ / ⏸</button>
 
-<h3>Actividades 💖</h3>
+</div>
+
+</div>
+
 
 <div class="activities">
 
-<button onclick="alert('🎲 Mini juego secreto')">Mini juego</button>
+<button onclick="startMiniGame()">🎮 Mini juego</button>
 
-<button onclick="alert('💌 Escribe un mensaje romántico')">Actividad romántica</button>
+<button onclick="startFlappy()">🐦 Flappy Love</button>
 
-<button onclick="alert('💬 Trivia romántica')">Trivia</button>
+<button onclick="showLoveLetter()">💌 Carta secreta</button>
 
-<button onclick="alert('🌹 Elige tu cita favorita')">Elegir cita</button>
+<button onclick="startFireworks()">🎆 Celebrar</button>
 
-<button onclick="alert('🎨 Dibuja algo para mí ❤️')">Actividad creativa</button>
+</div>
+
+
+<div id="imageContainer">
+
+<h3>📷 Galería</h3>
+
+<input type="file" id="imageUpload">
+
+<div id="displayImages"></div>
+
+</div>
+
+
+<div id="chatContainer">
+
+<h3>💬 Chat secreto</h3>
+
+<div id="chatBox"></div>
+
+<input id="chatInput" placeholder="Escribe algo">
+
+<button onclick="sendMessage()">Enviar</button>
 
 </div>
 
 </div>
 
 
-<script>
+<div id="letter" style="display:none">
 
-function checkPassword(){
+<h2>💌 Carta secreta</h2>
 
-let pass = document.getElementById("password").value;
+<p>
+Este rincón fue creado para alguien muy especial.
+Cada detalle está hecho para recordarte lo importante que eres 💖
+</p>
 
-if(pass === "TACHETONCITA❤️‍🔥"){
+<button onclick="closeLetter()">Cerrar</button>
 
-document.getElementById("login").style.display="none";
-document.getElementById("vipContent").style.display="block";
-
-}
-
-else{
-
-alert("Contraseña incorrecta");
-
-}
-
-}
+</div>
 
 
-/* FONDOS DE ATARDECER */
+<canvas id="fireworks"></canvas>
 
-let fondos = [
-"images/sunset1.jpg",
-"images/sunset2.jpg",
-"images/sunset3.jpg"
-];
+<canvas id="flappyCanvas" width="400" height="300"></canvas>
 
-let i = 0;
-
-function cambiarFondo(){
-
-document.body.style.backgroundImage = "url('" + fondos[i] + "')";
-
-i++;
-
-if(i >= fondos.length){
-i = 0;
-}
-
-}
-
-cambiarFondo();
-
-setInterval(cambiarFondo, 5000);
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
