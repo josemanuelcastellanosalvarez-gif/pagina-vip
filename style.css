@@ -734,6 +734,12 @@ h3{
   gap:0.7rem;
 }
 
+.timeline-form{
+  margin-top:1rem;
+  display:grid;
+  gap:0.75rem;
+}
+
 .reason-item,
 .timeline-item,
 .voice-item,

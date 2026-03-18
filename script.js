@@ -2,6 +2,7 @@ const ACCESS_KEY = "TACHETONCITA";
 
 const CHAT_STORAGE_KEY = "vip-chat-messages";
 const LOVE_METER_KEY = "vip-love-meter";
+const TIMELINE_STORAGE_KEY = "vip-custom-timeline";
 const SECRET_CODE = "amor";
 
 const LOVE_NOTES = [
@@ -97,11 +98,7 @@ const OPEN_IF = [
   { title: "Abre esto si necesitas calma", body: "Respira lento. Cambia el tema de la pagina, mira los atardeceres y deja que la musica haga su trabajo." }
 ];
 
-const TIMELINE = [
-  { title: "Un inicio especial", text: "Todo gran recuerdo empieza con una chispa dificil de olvidar." },
-  { title: "Risas compartidas", text: "Las conversaciones bonitas merecen un lugar donde quedarse." },
-  { title: "Mas paginas por escribir", text: "Este rincon puede seguir creciendo con nuevas fotos, cartas y canciones." }
-];
+const TIMELINE = [];
 
 const QUIZ_QUESTIONS = [
   { q: "Que combina mejor con esta pagina?", a: ["Un atardecer y una cancion", "Nada", "Apagarla"], correct: 0 },
@@ -196,6 +193,9 @@ const letterTabs = document.getElementById("letterTabs");
 const letterPreview = document.getElementById("letterPreview");
 const openIfGrid = document.getElementById("openIfGrid");
 const timelineList = document.getElementById("timelineList");
+const timelineDateInput = document.getElementById("timelineDateInput");
+const timelineTextInput = document.getElementById("timelineTextInput");
+const addTimelineButton = document.getElementById("addTimelineButton");
 const themeButtons = Array.from(document.querySelectorAll(".theme-button"));
 const unlockButton = document.getElementById("unlockButton");
 const unlockOverlay = document.getElementById("unlockOverlay");
@@ -604,12 +604,19 @@ function renderTimeline() {
     year: "numeric"
   });
 
+  let customItems = [];
+  try {
+    customItems = JSON.parse(localStorage.getItem(TIMELINE_STORAGE_KEY)) || [];
+  } catch (error) {
+    customItems = [];
+  }
+
   const dynamicTimeline = [
     {
       title: `Inicio registrado: ${formattedStart}`,
       text: "Esa fue la fecha en la que tuve la fortuna de comenzar a hablar contigo mi amor, Pequena Jess te amo."
     },
-    ...TIMELINE.slice(1)
+    ...customItems
   ];
 
   dynamicTimeline.forEach((item) => {
@@ -631,6 +638,43 @@ function renderTimeline() {
     row.appendChild(box);
     timelineList.appendChild(row);
   });
+}
+
+function addTimelineEntry() {
+  if (!timelineDateInput || !timelineTextInput) {
+    return;
+  }
+
+  const dateValue = timelineDateInput.value;
+  const textValue = timelineTextInput.value.trim();
+
+  if (!dateValue || !textValue) {
+    return;
+  }
+
+  let items = [];
+  try {
+    items = JSON.parse(localStorage.getItem(TIMELINE_STORAGE_KEY)) || [];
+  } catch (error) {
+    items = [];
+  }
+
+  const formattedDate = new Date(`${dateValue}T00:00:00`).toLocaleDateString("es-CO", {
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+  items.push({
+    title: formattedDate,
+    text: textValue
+  });
+
+  localStorage.setItem(TIMELINE_STORAGE_KEY, JSON.stringify(items));
+  timelineDateInput.value = "";
+  timelineTextInput.value = "";
+  renderTimeline();
+  addUnlock("Nueva fecha agregada a la linea de tiempo");
 }
 
 function renderLetters() {
@@ -1353,6 +1397,9 @@ if (imageModal) {
 const secretIfButton = document.getElementById("secretIfButton");
 if (secretIfButton) {
   secretIfButton.addEventListener("click", () => openSurpriseOverlay("Abre esto solo si necesitabas una razon para sonreir un poco hoy."));
+}
+if (addTimelineButton) {
+  addTimelineButton.addEventListener("click", addTimelineEntry);
 }
 window.addEventListener("resize", resizeFireworksCanvas);
 window.addEventListener("keydown", handleSecretCode);
