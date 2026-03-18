@@ -216,7 +216,13 @@
         <div class="timeline-form">
           <input id="timelineDateInput" type="date">
           <input id="timelineTextInput" type="text" placeholder="Escribe un recuerdo o una fecha especial">
-          <button id="addTimelineButton" type="button">Agregar fecha</button>
+          <div class="button-row">
+            <button id="addTimelineButton" type="button">Agregar fecha</button>
+            <button id="saveTimelineButton" type="button" class="secondary-button">Guardar cambios</button>
+            <button id="exportTimelineButton" type="button" class="secondary-button">Exportar fechas</button>
+            <label class="inline-upload" for="importTimelineInput">Importar fechas</label>
+          </div>
+          <input id="importTimelineInput" type="file" accept="application/json" hidden>
         </div>
       </article>
 

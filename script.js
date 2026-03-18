@@ -196,6 +196,9 @@ const timelineList = document.getElementById("timelineList");
 const timelineDateInput = document.getElementById("timelineDateInput");
 const timelineTextInput = document.getElementById("timelineTextInput");
 const addTimelineButton = document.getElementById("addTimelineButton");
+const saveTimelineButton = document.getElementById("saveTimelineButton");
+const exportTimelineButton = document.getElementById("exportTimelineButton");
+const importTimelineInput = document.getElementById("importTimelineInput");
 const themeButtons = Array.from(document.querySelectorAll(".theme-button"));
 const unlockButton = document.getElementById("unlockButton");
 const unlockOverlay = document.getElementById("unlockOverlay");
@@ -233,6 +236,7 @@ let matchedPairs = 0;
 let quizIndex = 0;
 let customVoices = [];
 let unlocks = JSON.parse(localStorage.getItem("vip-unlocks") || "[]");
+let editingTimelineIndex = -1;
 
 function shuffle(array) {
   return [...array].sort(() => Math.random() - 0.5);
@@ -619,7 +623,7 @@ function renderTimeline() {
     ...customItems
   ];
 
-  dynamicTimeline.forEach((item) => {
+  dynamicTimeline.forEach((item, index) => {
     const row = document.createElement("div");
     row.className = "timeline-item";
 
@@ -627,6 +631,7 @@ function renderTimeline() {
     dot.className = "timeline-dot";
 
     const box = document.createElement("div");
+    box.className = "timeline-content";
     const title = document.createElement("strong");
     title.textContent = item.title;
     const text = document.createElement("p");
@@ -634,6 +639,28 @@ function renderTimeline() {
 
     box.appendChild(title);
     box.appendChild(text);
+
+    if (index > 0) {
+      const actions = document.createElement("div");
+      actions.className = "timeline-actions";
+
+      const editButton = document.createElement("button");
+      editButton.type = "button";
+      editButton.className = "timeline-edit secondary-button";
+      editButton.textContent = "Editar";
+      editButton.addEventListener("click", () => editTimelineEntry(index - 1));
+
+      const deleteButton = document.createElement("button");
+      deleteButton.type = "button";
+      deleteButton.className = "timeline-delete secondary-button";
+      deleteButton.textContent = "Borrar";
+      deleteButton.addEventListener("click", () => deleteTimelineEntry(index - 1));
+
+      actions.appendChild(editButton);
+      actions.appendChild(deleteButton);
+      box.appendChild(actions);
+    }
+
     row.appendChild(dot);
     row.appendChild(box);
     timelineList.appendChild(row);
@@ -665,16 +692,94 @@ function addTimelineEntry() {
     year: "numeric"
   });
 
-  items.push({
+  const payload = {
     title: formattedDate,
     text: textValue
-  });
+  };
+
+  if (editingTimelineIndex >= 0) {
+    items[editingTimelineIndex] = payload;
+  } else {
+    items.push(payload);
+  }
 
   localStorage.setItem(TIMELINE_STORAGE_KEY, JSON.stringify(items));
   timelineDateInput.value = "";
   timelineTextInput.value = "";
+  editingTimelineIndex = -1;
   renderTimeline();
   addUnlock("Nueva fecha agregada a la linea de tiempo");
+}
+
+function editTimelineEntry(index) {
+  let items = [];
+  try {
+    items = JSON.parse(localStorage.getItem(TIMELINE_STORAGE_KEY)) || [];
+  } catch (error) {
+    items = [];
+  }
+
+  const item = items[index];
+  if (!item) {
+    return;
+  }
+
+  editingTimelineIndex = index;
+  timelineTextInput.value = item.text;
+}
+
+function deleteTimelineEntry(index) {
+  let items = [];
+  try {
+    items = JSON.parse(localStorage.getItem(TIMELINE_STORAGE_KEY)) || [];
+  } catch (error) {
+    items = [];
+  }
+
+  items.splice(index, 1);
+  localStorage.setItem(TIMELINE_STORAGE_KEY, JSON.stringify(items));
+  renderTimeline();
+  addUnlock("Fecha eliminada de la linea de tiempo");
+}
+
+function exportTimelineEntries() {
+  let items = [];
+  try {
+    items = JSON.parse(localStorage.getItem(TIMELINE_STORAGE_KEY)) || [];
+  } catch (error) {
+    items = [];
+  }
+
+  const blob = new Blob([JSON.stringify(items, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "fechas-pequena-jess.json";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+function importTimelineEntries(event) {
+  const file = event.target.files?.[0];
+  if (!file) {
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const parsed = JSON.parse(reader.result);
+      if (Array.isArray(parsed)) {
+        localStorage.setItem(TIMELINE_STORAGE_KEY, JSON.stringify(parsed));
+        renderTimeline();
+        addUnlock("Fechas importadas a la linea de tiempo");
+      }
+    } catch (error) {
+      openSurpriseOverlay("No se pudo importar el archivo de fechas.");
+    }
+  };
+  reader.readAsText(file);
+  importTimelineInput.value = "";
 }
 
 function renderLetters() {
@@ -1400,6 +1505,15 @@ if (secretIfButton) {
 }
 if (addTimelineButton) {
   addTimelineButton.addEventListener("click", addTimelineEntry);
+}
+if (saveTimelineButton) {
+  saveTimelineButton.addEventListener("click", addTimelineEntry);
+}
+if (exportTimelineButton) {
+  exportTimelineButton.addEventListener("click", exportTimelineEntries);
+}
+if (importTimelineInput) {
+  importTimelineInput.addEventListener("change", importTimelineEntries);
 }
 window.addEventListener("resize", resizeFireworksCanvas);
 window.addEventListener("keydown", handleSecretCode);

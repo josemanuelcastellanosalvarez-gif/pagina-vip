@@ -740,6 +740,13 @@ h3{
   gap:0.75rem;
 }
 
+.timeline-actions{
+  display:flex;
+  gap:0.6rem;
+  flex-wrap:wrap;
+  margin-top:0.8rem;
+}
+
 .reason-item,
 .timeline-item,
 .voice-item,
@@ -753,6 +760,7 @@ h3{
   display:grid;
   grid-template-columns:18px 1fr;
   gap:0.8rem;
+  box-shadow:0 10px 20px rgba(52, 31, 42, 0.05);
 }
 
 .timeline-dot{
@@ -762,6 +770,22 @@ h3{
   border-radius:50%;
   background:linear-gradient(135deg, var(--rose-500), var(--gold));
   box-shadow:0 0 0 6px rgba(228, 85, 136, 0.12);
+}
+
+.timeline-content{
+  display:grid;
+  gap:0.35rem;
+}
+
+.timeline-content p{
+  margin:0;
+}
+
+.timeline-edit,
+.timeline-delete{
+  width:auto;
+  padding:0.5rem 0.8rem;
+  font-size:0.82rem;
 }
 
 .letter-tabs{
