@@ -1,111 +1,349 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Rincón VIP 💖</title>
-
+<meta name="description" content="Rincon VIP para Pequena Jess con musica, recuerdos, cartas, juegos y sorpresas.">
+<meta name="theme-color" content="#e45588">
+<meta property="og:title" content="Rincon VIP para Pequena Jess">
+<meta property="og:description" content="Una experiencia romantica interactiva hecha con detalle para Pequena Jess.">
+<title>Rincon VIP para Pequena Jess</title>
 <link rel="stylesheet" href="style.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-
 </head>
+<body data-theme="sunset">
+<div class="ambient-glow ambient-left"></div>
+<div class="ambient-glow ambient-right"></div>
+<div class="floating-petals" id="floatingPetals"></div>
 
-<body>
+<div class="page-shell">
+  <section id="login" class="panel login-panel">
+    <p class="eyebrow">Espacio privado</p>
+    <h1>Acceso VIP</h1>
+    <p class="panel-copy">Una pagina especial para Pequena Jess, hecha con detalles bonitos y mucho carino.</p>
+    <div class="login-message-card">
+      <p class="eyebrow">Mensaje bonito</p>
+      <p id="loginDailyMessage" class="login-daily-message">Cada dia merece una frase suave y bonita para empezar.</p>
+    </div>
+    <label class="sr-only" for="password">Contrasena</label>
+    <input type="password" id="password" placeholder="Ingresa la contrasena">
+    <button id="loginButton" type="button">Entrar</button>
+    <p id="loginMessage" class="helper-text" aria-live="polite"></p>
+  </section>
 
-<div id="login">
-<h2>Acceso VIP 💌</h2>
-<input type="password" id="password" placeholder="Ingrese contraseña">
-<button onclick="checkPassword()">Entrar</button>
+  <main id="vipContent" class="vip-layout" hidden>
+    <section class="hero panel">
+      <div class="hero-backdrop">
+        <img id="heroPhoto" src="images/sunset1.jpg" alt="Atardecer romantico">
+      </div>
+      <div class="hero-content">
+        <p class="eyebrow">Para Pequena Jess</p>
+        <h2>Un lugar para guardar canciones, cartas, recuerdos y pequenos detalles pensados para ti</h2>
+        <p class="hero-copy">Cada bloque de esta pagina fue armado para que se sienta cercano, romantico y lleno de pequenos gestos que abrigan bonito.</p>
+        <div class="hero-actions">
+          <button id="heroLetterButton" type="button">Abrir carta</button>
+          <button id="surpriseButton" type="button" class="secondary-button">Dame una sorpresa</button>
+          <button id="jarButton" type="button" class="secondary-button">Sacar mensaje</button>
+        </div>
+        <div class="status-strip">
+          <div id="contador" class="counter"></div>
+          <div id="countdownBox" class="note-box"></div>
+          <div id="noteBox" class="note-box" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="message-banner panel">
+      <p class="eyebrow">Mensaje del dia para Pequena Jess</p>
+      <div class="banner-row">
+        <h3 id="dailyMessage">Hoy esta pagina quiere recordarte que mereces cosas bonitas.</h3>
+        <button id="changeDailyMessage" type="button" class="secondary-button">Cambiar mensaje</button>
+      </div>
+      <p id="specialDetail" class="helper-text special-detail"></p>
+    </section>
+
+    <section class="spotlight-grid">
+      <article class="panel spotlight-card">
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="eyebrow">Playlist</p>
+            <h3>Musica para el momento</h3>
+          </div>
+          <span class="badge" id="playlistCountBadge">5 pistas</span>
+        </div>
+        <div id="playerContainer" class="player">
+          <div class="disc-stage">
+            <div class="disc-ring ring-one"></div>
+            <div class="disc-ring ring-two"></div>
+            <div class="disc-arm"></div>
+            <img src="images/disc.png" id="disc" alt="Disco musical decorativo">
+          </div>
+          <div class="player-copy">
+            <p id="songName">Lista romantica</p>
+            <p class="player-subtitle">Sesion romantica continua con pistas del proyecto y canciones que agregues luego.</p>
+            <audio id="bgMusic"></audio>
+            <div class="button-row">
+              <button id="prevSong" type="button" class="secondary-button">Anterior</button>
+              <button id="musicToggle" type="button">Reproducir</button>
+              <button id="nextSong" type="button" class="secondary-button">Siguiente</button>
+              <button id="shuffleSongs" type="button" class="secondary-button">Aleatorio</button>
+            </div>
+            <div class="progress-wrap">
+              <span id="currentTime">0:00</span>
+              <input id="songProgress" type="range" min="0" max="100" value="0">
+              <span id="durationTime">0:00</span>
+            </div>
+            <div class="volume-row">
+              <label for="volumeControl">Volumen</label>
+              <input id="volumeControl" type="range" min="0" max="1" step="0.05" value="0.8">
+            </div>
+            <div class="now-playing-card">
+              <p class="eyebrow">Ahora sonando</p>
+              <p id="songStatus">Lista lista para empezar.</p>
+            </div>
+          </div>
+        </div>
+        <div class="playlist-board">
+          <div class="section-heading compact-heading">
+            <div>
+              <p class="eyebrow">Cola romantica</p>
+              <h3>Playlist completa</h3>
+            </div>
+            <label class="inline-upload" for="musicUpload">Agregar canciones</label>
+          </div>
+          <input id="musicUpload" type="file" accept="audio/*" multiple hidden>
+          <div id="playlistList" class="playlist-list"></div>
+        </div>
+      </article>
+
+      <article class="panel spotlight-card">
+        <div class="section-heading compact-heading">
+          <div>
+            <p class="eyebrow">Energia</p>
+            <h3>Medidor de ternura</h3>
+          </div>
+          <span class="badge">Desbloquea extras</span>
+        </div>
+        <div class="meter-card">
+          <div class="meter-track">
+            <div id="loveMeterFill" class="meter-fill"></div>
+          </div>
+          <p id="loveMeterText" class="helper-text">Cargando buenos sentimientos...</p>
+          <div class="button-row">
+            <button id="boostLoveButton" type="button">Subir nivel</button>
+            <button id="unlockButton" type="button" class="secondary-button">Ver desbloqueos</button>
+          </div>
+        </div>
+        <div class="theme-panel">
+          <p class="eyebrow">Temas</p>
+          <div class="theme-row">
+            <button class="theme-button" data-theme-option="sunset" type="button">Sunset</button>
+            <button class="theme-button" data-theme-option="night" type="button">Night</button>
+            <button class="theme-button" data-theme-option="gold" type="button">Gold</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="sunset-ribbon panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Atardeceres</p>
+          <h3>Mas presencia visual para el ambiente</h3>
+        </div>
+        <span class="badge">Vista romantica</span>
+      </div>
+      <div id="sunsetCards" class="sunset-cards"></div>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Capsulas</p>
+            <h3>Mini detalles especiales</h3>
+          </div>
+          <span class="badge">Pulsa para abrir</span>
+        </div>
+        <div id="capsuleGrid" class="capsule-grid"></div>
+      </article>
+
+      <article class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Recuerdos</p>
+            <h3>Album interactivo</h3>
+          </div>
+          <span class="badge">Con tus imagenes</span>
+        </div>
+        <label class="upload-label" for="imageUpload">Agregar imagenes</label>
+        <input type="file" id="imageUpload" accept="image/*" multiple>
+        <div id="displayImages" class="gallery"></div>
+      </article>
+
+      <article class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Mensajes</p>
+            <h3>Chat secreto</h3>
+          </div>
+          <span class="badge">Se guarda</span>
+        </div>
+        <div id="chatBox" class="chat-box" aria-live="polite"></div>
+        <div class="chat-controls">
+          <input id="chatInput" placeholder="Escribe algo bonito">
+          <button id="sendButton" type="button">Enviar</button>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Razones</p>
+            <h3>Pequenas razones para sonreir</h3>
+          </div>
+          <span class="badge">Random</span>
+        </div>
+        <div id="reasonsList" class="reasons-list"></div>
+        <button id="refreshReasonsButton" type="button" class="secondary-button">Cambiar razones</button>
+      </article>
+    </section>
+
+    <section class="story-grid">
+      <article class="panel story-card">
+        <p class="eyebrow">Linea de tiempo</p>
+        <h3>Momentos para recordar</h3>
+        <div class="timeline" id="timelineList"></div>
+      </article>
+
+      <article class="panel story-card">
+        <p class="eyebrow">Frasco de mensajes</p>
+        <h3>Saca algo bonito cuando quieras</h3>
+        <div class="surprise-card">
+          <p id="jarMessage">Pulsa el boton para descubrir un detalle inesperado.</p>
+          <div class="button-row">
+            <button id="newSurpriseButton" type="button">Abrir sorpresa</button>
+            <button id="secretIfButton" type="button" class="secondary-button">Abre esto solo si...</button>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="two-col-grid">
+      <article class="panel letters-panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Cartas</p>
+            <h3>Varias cartas para distintos momentos</h3>
+          </div>
+          <span class="badge">4 cartas</span>
+        </div>
+        <div id="letterTabs" class="letter-tabs"></div>
+        <div id="letterPreview" class="letter-preview"></div>
+      </article>
+
+      <article class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Abre esto solo si...</p>
+            <h3>Mensajes por estado de animo</h3>
+          </div>
+          <span class="badge">Interactivo</span>
+        </div>
+        <div id="openIfGrid" class="open-if-grid"></div>
+      </article>
+    </section>
+
+    <section class="two-col-grid">
+      <article class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Juegos</p>
+            <h3>Juegos para hacerla mas especial</h3>
+          </div>
+          <span class="badge">Memoria y quiz</span>
+        </div>
+        <div class="activities">
+          <button id="miniGameButton" type="button">Mini juego</button>
+          <button id="flappyButton" type="button">Jugar Flappy Love</button>
+          <button id="memoryButton" type="button" class="secondary-button">Memoria</button>
+          <button id="quizButton" type="button" class="secondary-button">Quiz</button>
+          <button id="fireworksButton" type="button" class="secondary-button">Celebrar</button>
+        </div>
+        <p id="gameStatus" class="helper-text"></p>
+        <div id="memoryGrid" class="memory-grid" hidden></div>
+        <div id="quizCard" class="quiz-card" hidden>
+          <p id="quizQuestion"></p>
+          <div id="quizAnswers" class="quiz-answers"></div>
+        </div>
+      </article>
+
+      <article class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Voces</p>
+            <h3>Notas de voz y audio personalizado</h3>
+          </div>
+          <label class="inline-upload" for="voiceUpload">Agregar audios</label>
+        </div>
+        <input id="voiceUpload" type="file" accept="audio/*" multiple hidden>
+        <div id="voiceList" class="voice-list"></div>
+      </article>
+    </section>
+
+    <section class="quote-grid">
+      <article class="panel quote-card">
+        <p class="eyebrow">Detalle bonito</p>
+        <h3>Palabras que se quedan</h3>
+        <p id="featuredQuote" class="featured-quote">"A veces la ternura tambien se puede programar."</p>
+      </article>
+    </section>
+
+  </main>
 </div>
 
-
-<div id="vipContent">
-
-<h1>Bienvenido a tu rincón especial 💖</h1>
-
-<div id="contador"></div>
-
-<div id="noteBox"></div>
-
-
-<div id="playerContainer">
-
-<img src="images/disc.png" id="disc">
-
-<div>
-
-<p id="songName"></p>
-
-<audio id="bgMusic"></audio>
-
-<button onclick="toggleMusic()">▶️ / ⏸</button>
-
+<div id="letterOverlay" class="overlay" hidden>
+  <section id="letter" class="letter-card" aria-modal="true" role="dialog" aria-labelledby="letterTitle">
+    <p class="eyebrow">Carta secreta</p>
+    <h2 id="letterTitle">Para Pequena Jess</h2>
+    <p id="letterOverlayText">
+      Este rincon fue creado para recordarte lo importante que eres. Cada detalle busca acompanarte con musica, recuerdos y carino.
+    </p>
+    <button id="closeLetter" type="button">Cerrar</button>
+  </section>
 </div>
 
+<div id="surpriseOverlay" class="overlay" hidden>
+  <section class="letter-card surprise-modal" aria-modal="true" role="dialog" aria-labelledby="surpriseTitle">
+    <p class="eyebrow">Sorpresa</p>
+    <h2 id="surpriseTitle">Un mensaje para sonreir</h2>
+    <p id="surpriseOverlayText"></p>
+    <button id="closeSurpriseOverlay" type="button">Cerrar</button>
+  </section>
 </div>
 
-
-<div class="activities">
-
-<button onclick="startMiniGame()">🎮 Mini juego</button>
-
-<button onclick="startFlappy()">🐦 Flappy Love</button>
-
-<button onclick="showLoveLetter()">💌 Carta secreta</button>
-
-<button onclick="startFireworks()">🎆 Celebrar</button>
-
+<div id="imageModal" class="overlay" hidden>
+  <section class="image-modal-card" aria-modal="true" role="dialog">
+    <img id="modalImage" src="" alt="Imagen ampliada">
+    <div class="button-row">
+      <button id="prevImage" type="button" class="secondary-button">Anterior</button>
+      <button id="nextImage" type="button" class="secondary-button">Siguiente</button>
+      <button id="closeImageModal" type="button">Cerrar</button>
+    </div>
+  </section>
 </div>
 
-
-<div id="imageContainer">
-
-<h3>📷 Galería</h3>
-
-<input type="file" id="imageUpload">
-
-<div id="displayImages"></div>
-
+<div id="unlockOverlay" class="overlay" hidden>
+  <section class="letter-card surprise-modal" aria-modal="true" role="dialog">
+    <p class="eyebrow">Desbloqueos</p>
+    <h2>Lo que ya activaste</h2>
+    <div id="unlockList" class="unlock-list"></div>
+    <button id="closeUnlockOverlay" type="button">Cerrar</button>
+  </section>
 </div>
-
-
-<div id="chatContainer">
-
-<h3>💬 Chat secreto</h3>
-
-<div id="chatBox"></div>
-
-<input id="chatInput" placeholder="Escribe algo">
-
-<button onclick="sendMessage()">Enviar</button>
-
-</div>
-
-</div>
-
-
-<div id="letter" style="display:none">
-
-<h2>💌 Carta secreta</h2>
-
-<p>
-Este rincón fue creado para alguien muy especial.
-Cada detalle está hecho para recordarte lo importante que eres 💖
-</p>
-
-<button onclick="closeLetter()">Cerrar</button>
-
-</div>
-
 
 <canvas id="fireworks"></canvas>
-
-<canvas id="flappyCanvas" width="400" height="300"></canvas>
+<canvas id="flappyCanvas" width="400" height="300" hidden></canvas>
 
 <script src="script.js"></script>
-
 </body>
 </html>
