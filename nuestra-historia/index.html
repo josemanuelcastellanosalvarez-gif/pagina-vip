@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#b64b6d" />
+    <title>Nuestra historia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono&family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="sky" aria-hidden="true"></div>
+    <div class="sparkles" aria-hidden="true"></div>
+
+    <section class="access-gate" id="accessGate" aria-labelledby="accessTitle">
+      <form class="access-card" id="accessForm">
+        <p class="eyebrow">ESPACIO PRIVADO</p>
+        <h1 id="accessTitle">Un rincón<br /><em>solo nuestro.</em></h1>
+        <p>Escribe la contraseña para descubrir esta pequeña historia.</p>
+        <label for="accessPassword">Contraseña</label>
+        <input id="accessPassword" type="password" autocomplete="current-password" required />
+        <button class="button" type="submit">Entrar <span>→</span></button>
+        <p class="access-error" id="accessError" role="alert"></p>
+      </form>
+    </section>
+
+    <main id="pageContent" hidden>
+      <section class="hero panel">
+        <p class="eyebrow">UNA HISTORIA QUE SIGUE CRECIENDO</p>
+        <h1>El lugar donde<br /><em>vive l<button class="secret-o" id="secretO" type="button" aria-label="Una pista escondida"><span>o</span><i aria-hidden="true"><b></b><b></b></i></button> nuestro.</em></h1>
+        <p class="intro">No es solo una página. Es una pequeña cápsula para guardar las cosas bonitas que vamos creando juntos.</p>
+        <a class="chapter-teaser" id="chapterTeaser" href="capitulos.html"><span>10</span><strong>capítulos por descubrir</strong><small>una historia para deslizar despacio</small><b aria-label="Abrir los capítulos">♥</b></a>
+        <a class="button" href="#tiempo">Ver nuestra historia <span>↓</span></a>
+      </section>
+
+      <section class="counter panel" id="tiempo" aria-labelledby="counter-title">
+        <p class="eyebrow">DESDE QUE COMENZÓ LO NUESTRO</p>
+        <h2 id="counter-title">Cada instante contigo cuenta.</h2>
+        <div class="time-grid" aria-live="polite">
+          <div><strong id="years">0</strong><span>años</span></div>
+          <div><strong id="days">0</strong><span>días</span></div>
+          <div><strong id="hours">0</strong><span>horas</span></div>
+          <div><strong id="minutes">0</strong><span>minutos</span></div>
+          <div><strong id="seconds">0</strong><span>segundos</span></div>
+        </div>
+        <p class="counter-note">Nuestra historia comenzó el 14 de julio de 2026, a las 4:08 p. m.</p>
+      </section>
+
+      <section class="story-grid">
+        <article class="reasons panel reveal">
+          <p class="eyebrow">PEQUEÑOS TESOROS</p>
+          <h2>Razones para sonreír</h2>
+          <ul>
+            <li><span>01</span> Porque contigo lo cotidiano se vuelve especial.</li>
+            <li><span>02</span> Porque siempre hay una razón para quedarnos un ratito más.</li>
+            <li><span>03</span> Porque lo nuestro merece ser celebrado.</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="memories panel reveal">
+        <div>
+          <p class="eyebrow">NUESTROS RECUERDOS</p>
+          <h2>Un álbum que apenas comienza.</h2>
+          <p>Aquí podrán guardar fotos, fechas, planes y esos momentos que no quieren olvidar.</p>
+        </div>
+        <div class="memory-cards">
+          <article><span>01</span><h3>El comienzo</h3><p>14 de julio de 2026<br />4:08 p. m.</p></article>
+          <article class="love-card"><span>02 · TOCA EL CORAZON</span><h3 id="loveCount">0</h3><p>amor compartido hoy</p><button id="loveTap" type="button" aria-label="Sumar amor">♥</button></article>
+          <article><span>03</span><h3>Lo que viene</h3><p>Muchas páginas por escribir.</p></article>
+        </div>
+      </section>
+
+      <section class="promise panel reveal">
+        <p class="eyebrow">PARA GUARDAR CERCA</p>
+        <blockquote>"Que nunca nos falten motivos para elegirnos otra vez."</blockquote>
+        <button class="button secondary" id="surpriseButton">Un pequeño detalle <span>✦</span></button>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="script.js"></script>
+  </body>
+</html>
